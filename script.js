@@ -1,0 +1,7 @@
+const menu = document.querySelector('.menu');
+const nav = document.querySelector('#navigation');
+menu.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); nav.classList.toggle('open', open); });
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); menu.setAttribute('aria-expanded','false'); }));
+document.querySelectorAll('[data-service]').forEach(a => a.addEventListener('click', () => { const cargo = document.querySelector('#cargo'); if (!cargo.value) cargo.value = a.dataset.service + ': '; }));
+document.querySelector('#enquiry').addEventListener('submit', event => { event.preventDefault(); const data = new FormData(event.currentTarget); const body = `Hello Apex Shipping,\n\nI would like to discuss a shipment.\n\nName / company: ${data.get('name')}\nOrigin: ${data.get('origin')}\nDestination: ${data.get('destination')}\nCargo details: ${data.get('cargo')}\n\nPlease let me know the next steps.\n`; const subject = `Shipping enquiry: ${data.get('origin')} to ${data.get('destination')}`; window.location.href = `mailto:apex@apexshipping.co.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`; document.querySelector('#form-status').textContent = 'Your email app should open. Review the details and press Send. You can also email apex@apexshipping.co.in directly.'; });
+document.querySelector('#year').textContent = new Date().getFullYear();
